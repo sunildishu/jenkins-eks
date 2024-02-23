@@ -84,5 +84,17 @@ pipeline {
                dockerImagePush()
                }
             }
+       stage('Integrate Jenkins with EKS Cluster and Deploy App') {
+            steps {
+                withAWS(credentials: 'sunil-iam', region: 'ap-south-1') {
+                  script {
+                    sh ('aws eks update-kubeconfig --name anjan-eks --region ap-south-1')
+                    sh "kubectl apply -f ./kubernatemanifest/deployment.yaml -f ./kubernatemanifest/service.yaml"
+                }
+                }
+        }
+    }
+
+
     }
 }
