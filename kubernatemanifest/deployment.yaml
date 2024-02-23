@@ -1,19 +1,24 @@
-apiVersion : apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: springbootapp
+  labels:
+    app: springboot-app
+  name: springboot-app
 spec:
-  replicas: 1
+  replicas: 4
   selector:
     matchLabels:
-      app: springbootapp
+      app: springboot-app
   template:
     metadata:
       labels:
-        app: springbootapp
+        app: springboot-app
     spec:
       containers:
-        - name: springbootapp
-          image: 785236889276.dkr.ecr.ap-south-1.amazonaws.com/ecr3-ecr:latest
-          ports:
-          - containerPort: 80
+      - name: my-springboot-app
+        image: 785236889276.dkr.ecr.ap-south-1.amazonaws.com/ecr3-ecr:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
